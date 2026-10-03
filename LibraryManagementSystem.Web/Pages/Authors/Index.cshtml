@@ -1,0 +1,121 @@
+﻿@page
+@model LibraryManagementSystem.Web.Pages.Authors.IndexModel
+
+@{
+    ViewData["Title"] = "Authors";
+}
+
+<link rel="stylesheet" href="~/css/books.css" />
+
+<div class="page-header">
+
+    <div>
+        <h1>Authors</h1>
+        <p>Manage library authors.</p>
+    </div>
+
+    <a asp-page="Create" class="primary-btn">
+        + New Author
+    </a>
+
+</div>
+
+<div class="books-filters">
+
+    <form method="get" class="filters-form">
+
+        <div class="filter-group search-group">
+            <label for="Search">Search</label>
+
+            <input type="text"
+                   id="Search"
+                   name="Search"
+                   value="@Model.Search"
+                   placeholder="Search by name or email..." />
+        </div>
+
+        <div class="filter-actions">
+
+            <button type="submit" class="primary-btn">
+                Search
+            </button>
+
+            <a asp-page="Index" class="secondary-btn">
+                Clear
+            </a>
+
+        </div>
+
+    </form>
+
+</div>
+
+@if (!Model.Authors.Any())
+{
+    <div class="empty-state">
+        <h3>No authors found</h3>
+        <p>There are no authors matching your search.</p>
+    </div>
+}
+else
+{
+    <div class="entity-grid">
+
+        @foreach (var author in Model.Authors)
+        {
+            <div class="entity-card">
+
+                <div class="entity-card-header">
+
+                    <div>
+                        <h2>@author.Name</h2>
+                        <span class="entity-id">
+                            Author #@author.AuthorID
+                        </span>
+                    </div>
+
+                </div>
+
+                <div class="entity-card-body">
+
+                    <div class="entity-info">
+                        <span class="info-label">Email</span>
+                        <span>
+                            @(string.IsNullOrWhiteSpace(author.Email)
+                                                ? "—"
+                                                : author.Email)
+                                                           </span>
+                                                       </div>
+
+                    <div class="entity-info">
+                        <span class="info-label">Nationality</span>
+                        <span>
+                            @(string.IsNullOrWhiteSpace(author.Nationality)
+                                                ? "—"
+                                                : author.Nationality)
+                </span>
+            </div>
+
+                </div>
+
+                <div class="entity-card-footer">
+
+                    <a asp-page="Details"
+                       asp-route-id="@author.AuthorID"
+                       class="details-btn">
+                        Details
+                    </a>
+
+                    <a asp-page="Edit"
+                       asp-route-id="@author.AuthorID"
+                       class="edit-btn">
+                        Edit
+                    </a>
+
+                </div>
+
+            </div>
+        }
+
+    </div>
+}

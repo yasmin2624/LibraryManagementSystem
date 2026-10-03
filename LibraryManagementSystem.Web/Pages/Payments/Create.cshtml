@@ -1,0 +1,152 @@
+﻿@page
+@model LibraryManagementSystem.Web.Pages.Payments.CreateModel
+
+@{
+    ViewData["Title"] = "Record Payment";
+}
+
+<link rel="stylesheet" href="~/css/books.css" />
+
+<div class="form-page">
+
+    <div class="form-card">
+
+        <div class="form-header">
+            <h1>Record Payment</h1>
+            <p>Record a payment and link it to a borrow record.</p>
+        </div>
+
+        <form method="post">
+
+            <div asp-validation-summary="ModelOnly"
+                 class="validation-summary">
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Payment.BorrowID">
+                    Borrow Record
+                </label>
+
+                <select asp-for="Payment.BorrowID"
+                        class="custom-input">
+
+                    <option value="">Select Borrow Record</option>
+
+                    @foreach (var borrow in Model.Borrows)
+                    {
+                        <option value="@borrow.BorrowID">
+                            Borrow #@borrow.BorrowID
+                            - Book @borrow.BookID
+                            - Member @borrow.MemberID
+                            - @borrow.Status
+                        </option>
+                    }
+
+                </select>
+
+                <span asp-validation-for="Payment.BorrowID"
+                      class="validation-message">
+                </span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Payment.Amount"></label>
+
+                <input asp-for="Payment.Amount"
+                       class="custom-input"
+                       type="number"
+                       step="0.01"
+                       min="0.01"
+                       placeholder="Enter payment amount" />
+
+                <span asp-validation-for="Payment.Amount"
+                      class="validation-message">
+                </span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Payment.PaymentMethod">
+                    Payment Method
+                </label>
+
+                <select asp-for="Payment.PaymentMethod"
+                        class="custom-input">
+
+                    <option value="">Select method</option>
+                    <option value="Cash">Cash</option>
+                    <option value="Card">Card</option>
+                    <option value="Online">Online</option>
+                </select>
+
+                <span asp-validation-for="Payment.PaymentMethod"
+                      class="validation-message">
+                </span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Payment.PaymentDate">
+                    Payment Date
+                </label>
+
+                <input asp-for="Payment.PaymentDate"
+                       class="custom-input"
+                       type="datetime-local" />
+
+                <span asp-validation-for="Payment.PaymentDate"
+                      class="validation-message">
+                </span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Payment.Status"></label>
+
+                <select asp-for="Payment.Status"
+                        class="custom-input">
+
+                    <option value="">Select status</option>
+                    <option value="Paid">Paid</option>
+                    <option value="Pending">Pending</option>
+                    <option value="Failed">Failed</option>
+                </select>
+
+                <span asp-validation-for="Payment.Status"
+                      class="validation-message">
+                </span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Payment.Notes"></label>
+
+                <textarea asp-for="Payment.Notes"
+                          class="custom-input"
+                          rows="4"
+                          placeholder="Optional notes"></textarea>
+
+                <span asp-validation-for="Payment.Notes"
+                      class="validation-message">
+                </span>
+            </div>
+
+            <div class="form-actions">
+
+                <button type="submit"
+                        class="primary-action-btn">
+                    Record Payment
+                </button>
+
+                <a asp-page="Index"
+                   class="secondary-btn">
+                    Cancel
+                </a>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

@@ -1,0 +1,186 @@
+﻿@page
+@model LibraryManagementSystem.Web.Pages.IndexModel
+
+@{
+    ViewData["Title"] = "Dashboard";
+}
+
+<link rel="stylesheet" href="~/css/books.css" />
+
+<div class="dashboard-page">
+
+    <!-- Header -->
+    <div class="dashboard-hero">
+        <div>
+            <span class="dashboard-welcome">LIBRARY MANAGEMENT SYSTEM</span>
+            <h1>Dashboard</h1>
+            <p>Manage your library, books, users and borrowing activity.</p>
+        </div>
+
+        <div class="dashboard-hero-icon">
+            📚
+        </div>
+    </div>
+
+
+    <!-- Main Statistics -->
+    <div class="dashboard-stats">
+
+        <div class="dashboard-stat-card">
+            <div class="stat-icon books-icon">📚</div>
+            <div class="stat-content">
+                <span>Total Books</span>
+                <strong>@Model.TotalBooks</strong>
+            </div>
+        </div>
+
+        <div class="dashboard-stat-card">
+            <div class="stat-icon available-icon">✓</div>
+            <div class="stat-content">
+                <span>Available Books</span>
+                <strong>@Model.AvailableBooks</strong>
+            </div>
+        </div>
+
+        <div class="dashboard-stat-card">
+            <div class="stat-icon borrowed-icon">📖</div>
+            <div class="stat-content">
+                <span>Borrowed Books</span>
+                <strong>@Model.BorrowedBooks</strong>
+            </div>
+        </div>
+
+        <div class="dashboard-stat-card">
+            <div class="stat-icon users-icon">👥</div>
+            <div class="stat-content">
+                <span>Total Users</span>
+                <strong>@Model.TotalUsers</strong>
+            </div>
+        </div>
+
+        <div class="dashboard-stat-card">
+            <div class="stat-icon active-icon">●</div>
+            <div class="stat-content">
+                <span>Active Users</span>
+                <strong>@Model.ActiveUsers</strong>
+            </div>
+        </div>
+
+    </div>
+
+
+    <!-- Borrow Statistics -->
+    <div class="dashboard-section">
+
+        <div class="section-title">
+            <div>
+                <h2>Borrow Overview</h2>
+                <p>Current borrowing activity in the library</p>
+            </div>
+        </div>
+
+        <div class="borrow-grid">
+
+            <div class="borrow-card">
+                <div class="borrow-card-icon">🔄</div>
+                <div>
+                    <span>Active Borrows</span>
+                    <strong>@Model.ActiveBorrows</strong>
+                    <small>Currently borrowed</small>
+                </div>
+            </div>
+
+            <div class="borrow-card">
+                <div class="borrow-card-icon">↩</div>
+                <div>
+                    <span>Returned Books</span>
+                    <strong>@Model.ReturnedBorrows</strong>
+                    <small>Successfully returned</small>
+                </div>
+            </div>
+
+            <div class="borrow-card overdue">
+                <div class="borrow-card-icon">!</div>
+                <div>
+                    <span>Overdue Borrows</span>
+                    <strong>@Model.OverdueBorrows</strong>
+                    <small>Past the due date</small>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- Quick Access -->
+    <div class="dashboard-section">
+
+        <div class="section-title">
+            <div>
+                <h2>Quick Access</h2>
+                <p>Go directly to a library section</p>
+            </div>
+        </div>
+
+        <div class="quick-access-grid">
+
+            <a asp-page="/Books/Index" class="quick-card">
+                <div class="quick-icon">📚</div>
+                <div>
+                    <h3>Books</h3>
+                    <p>Manage library books</p>
+                </div>
+                <span class="quick-arrow">→</span>
+            </a>
+
+            <a asp-page="/Authors/Index" class="quick-card">
+                <div class="quick-icon">✍️</div>
+                <div>
+                    <h3>Authors</h3>
+                    <p>Manage book authors</p>
+                </div>
+                <span class="quick-arrow">→</span>
+            </a>
+
+            <a asp-page="/Categories/Index" class="quick-card">
+                <div class="quick-icon">🏷️</div>
+                <div>
+                    <h3>Categories</h3>
+                    <p>Manage book categories</p>
+                </div>
+                <span class="quick-arrow">→</span>
+            </a>
+
+            <a asp-page="/Users/Index" class="quick-card">
+                <div class="quick-icon">👥</div>
+                <div>
+                    <h3>Users</h3>
+                    <p>Manage library users</p>
+                </div>
+                <span class="quick-arrow">→</span>
+            </a>
+
+            <a asp-page="/Borrows/Index" class="quick-card">
+                <div class="quick-icon">📖</div>
+                <div>
+                    <h3>Borrows</h3>
+                    <p>Manage borrowing records</p>
+                </div>
+                <span class="quick-arrow">→</span>
+            </a>
+
+            <a asp-page="/Payments/Index" class="quick-card">
+                <div class="quick-icon">💳</div>
+                <div>
+                    <h3>Payments</h3>
+                    <p>Manage payment records</p>
+                </div>
+                <span class="quick-arrow">→</span>
+            </a>
+
+        </div>
+
+    </div>
+
+</div>

@@ -1,0 +1,126 @@
+﻿@page
+@model LibraryManagementSystem.Web.Pages.Borrows.DetailsModel
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/books.css" />
+}
+
+<div class="details-page">
+
+    <div class="details-card">
+
+        <div class="details-header">
+
+            <div>
+                <span class="details-label">
+                    BORROWING RECORD
+                </span>
+
+                <h1>Borrow #@Model.Borrow!.BorrowID</h1>
+
+                <p>
+                    Details of this book borrowing record.
+                </p>
+            </div>
+
+            @if (Model.Borrow.Status == "Returned")
+            {
+                <span class="status available">
+                    Returned
+                </span>
+            }
+            else
+            {
+                <span class="status borrowed">
+                    @Model.Borrow.Status
+                </span>
+            }
+
+        </div>
+
+        <div class="details-body">
+
+            <div class="detail-item">
+                <span>Book ID</span>
+                <strong>
+                    #@Model.Borrow.BookID
+                </strong>
+            </div>
+
+            <div class="detail-item">
+                <span>Member ID</span>
+                <strong>
+                    #@Model.Borrow.MemberID
+                </strong>
+            </div>
+
+            <div class="detail-item">
+                <span>Librarian ID</span>
+                <strong>
+                    #@Model.Borrow.LibrarianID
+                </strong>
+            </div>
+
+            <div class="detail-item">
+                <span>Borrow Date</span>
+                <strong>
+                    @Model.Borrow.BorrowDate.ToString("dd MMM yyyy")
+                </strong>
+            </div>
+
+            <div class="detail-item">
+                <span>Due Date</span>
+                <strong>
+                    @Model.Borrow.DueDate.ToString("dd MMM yyyy")
+                </strong>
+            </div>
+
+            <div class="detail-item">
+                <span>Return Date</span>
+                <strong>
+                    @(Model.Borrow.ReturnDate.HasValue
+                                        ? Model.Borrow.ReturnDate.Value.ToString("dd MMM yyyy")
+                                        : "Not returned")
+                </strong>
+            </div>
+
+            <div class="detail-item">
+                <span>Status</span>
+                <strong>
+                    @Model.Borrow.Status
+                </strong>
+            </div>
+
+        </div>
+        <div class="details-footer">
+
+            <a asp-page="Index"
+               class="secondary-btn">
+                ← Back to Borrows
+            </a>
+
+            @if (Model.Borrow.Status != "Returned")
+            {
+                <a asp-page="Edit"
+                   asp-route-id="@Model.Borrow.BorrowID"
+                   class="secondary-btn">
+                    Edit Borrow
+                </a>
+
+                <form method="post"
+                      asp-page-handler="Return"
+                      asp-route-id="@Model.Borrow.BorrowID">
+
+                    <button type="submit"
+                            class="primary-action-btn">
+                        Return Book
+                    </button>
+
+                </form>
+            }
+
+        </div>
+
+    </div>
+
+</div>

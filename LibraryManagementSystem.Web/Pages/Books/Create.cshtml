@@ -1,0 +1,151 @@
+﻿@page
+@model LibraryManagementSystem.Web.Pages.Books.CreateModel
+
+<div class="form-page">
+    <div class="form-card">
+
+        <div class="form-header">
+            <h1>Create New Book</h1>
+            <p>Add a new book to the library collection.</p>
+        </div>
+
+        <form method="post">
+
+            <div asp-validation-summary="ModelOnly"
+                 class="validation-summary"></div>
+
+            <div class="form-group">
+                <label asp-for="Book.ISBN"></label>
+
+                <input asp-for="Book.ISBN"
+                       class="custom-input"
+                       placeholder="Enter ISBN" />
+
+                <span asp-validation-for="Book.ISBN"
+                      class="validation-message"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Book.Title"></label>
+
+                <input asp-for="Book.Title"
+                       class="custom-input"
+                       placeholder="Enter book title" />
+
+                <span asp-validation-for="Book.Title"
+                      class="validation-message"></span>
+            </div>
+
+            <div class="form-row">
+
+                <div class="form-group">
+                    <label asp-for="Book.Genre"></label>
+
+                    <input asp-for="Book.Genre"
+                           class="custom-input"
+                           placeholder="e.g. Fiction" />
+
+                    <span asp-validation-for="Book.Genre"
+                          class="validation-message"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Book.Language"></label>
+
+                    <input asp-for="Book.Language"
+                           class="custom-input"
+                           placeholder="e.g. English" />
+
+                    <span asp-validation-for="Book.Language"
+                          class="validation-message"></span>
+                </div>
+
+            </div>
+
+            <div class="form-row">
+
+                <!-- Author Dropdown -->
+                <div class="form-group">
+
+                    <label asp-for="Book.AuthorID"></label>
+
+                    <select asp-for="Book.AuthorID"
+                            class="custom-input">
+
+                        <option value="">-- Select Author --</option>
+
+                        @foreach (var author in Model.Authors)
+                        {
+                            <option value="@author.AuthorID">
+                                @author.Name
+                            </option>
+                        }
+
+                    </select>
+
+                    <span asp-validation-for="Book.AuthorID"
+                          class="validation-message"></span>
+
+                </div>
+
+                <!-- Category Dropdown -->
+                <div class="form-group">
+
+                    <label asp-for="Book.CategoryID"></label>
+
+                    <select asp-for="Book.CategoryID"
+                            class="custom-input">
+
+                        <option value="">-- Select Category --</option>
+
+                        @foreach (var category in Model.Categories)
+                        {
+                            <option value="@category.CategoryID">
+                                @category.Name
+                            </option>
+                        }
+
+                    </select>
+
+                    <span asp-validation-for="Book.CategoryID"
+                          class="validation-message"></span>
+
+                </div>
+
+            </div>
+
+            <div class="availability-box">
+
+                <input asp-for="Book.Availability"
+                       class="availability-checkbox" />
+
+                <div>
+                    <label asp-for="Book.Availability">
+                        Available
+                    </label>
+
+                    <p>
+                        Mark this book as available for borrowing.
+                    </p>
+                </div>
+
+            </div>
+
+            <div class="form-actions">
+
+                <a asp-page="Index"
+                   class="secondary-btn">
+                    Cancel
+                </a>
+
+                <button type="submit"
+                        class="primary-action-btn">
+                    Create Book
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+</div>

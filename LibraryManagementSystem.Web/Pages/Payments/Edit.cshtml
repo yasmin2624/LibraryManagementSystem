@@ -1,0 +1,134 @@
+﻿@page "{id:int}"
+@model LibraryManagementSystem.Web.Pages.Payments.EditModel
+
+@{
+    ViewData["Title"] = "Edit Payment";
+}
+
+<link rel="stylesheet" href="~/css/books.css" />
+
+<div class="form-page">
+
+    <div class="form-card">
+
+        <div class="form-header">
+            <h1>Edit Payment</h1>
+            <p>Update payment information.</p>
+        </div>
+
+        <form method="post">
+
+            <div asp-validation-summary="ModelOnly"
+                 class="validation-summary">
+            </div>
+
+            <div class="form-group">
+                <label>Borrow ID</label>
+
+                <input class="custom-input"
+                       value="@Model.BorrowID"
+                       readonly />
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Payment.Amount"></label>
+
+                <input asp-for="Payment.Amount"
+                       class="custom-input"
+                       type="number"
+                       step="0.01"
+                       min="0.01" />
+
+                <span asp-validation-for="Payment.Amount"
+                      class="validation-message">
+                </span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Payment.PaymentMethod">
+                    Payment Method
+                </label>
+
+                <select asp-for="Payment.PaymentMethod"
+                        class="custom-input">
+
+                    <option value="">Select method</option>
+                    <option value="Cash">Cash</option>
+                    <option value="Card">Card</option>
+                    <option value="Online">Online</option>
+
+                </select>
+
+                <span asp-validation-for="Payment.PaymentMethod"
+                      class="validation-message">
+                </span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Payment.PaymentDate">
+                    Payment Date
+                </label>
+
+                <input asp-for="Payment.PaymentDate"
+                       class="custom-input"
+                       type="datetime-local" />
+
+                <span asp-validation-for="Payment.PaymentDate"
+                      class="validation-message">
+                </span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Payment.Status"></label>
+
+                <select asp-for="Payment.Status"
+                        class="custom-input">
+
+                    <option value="">Select status</option>
+                    <option value="Paid">Paid</option>
+                    <option value="Pending">Pending</option>
+                    <option value="Failed">Failed</option>
+
+                </select>
+
+                <span asp-validation-for="Payment.Status"
+                      class="validation-message">
+                </span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Payment.Notes"></label>
+
+                <textarea asp-for="Payment.Notes"
+                          class="custom-input"
+                          rows="4"></textarea>
+
+                <span asp-validation-for="Payment.Notes"
+                      class="validation-message">
+                </span>
+            </div>
+
+            <div class="form-actions">
+
+                <button type="submit"
+                        class="primary-action-btn">
+                    Save Changes
+                </button>
+
+                <a asp-page="Details"
+                   asp-route-id="@Model.PaymentID"
+                   class="secondary-btn">
+                    Cancel
+                </a>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

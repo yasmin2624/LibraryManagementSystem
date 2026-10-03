@@ -1,0 +1,180 @@
+﻿@page
+@model LibraryManagementSystem.Web.Pages.Borrows.CreateModel
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/books.css" />
+}
+
+<div class="form-page">
+
+    <div class="page-header">
+        <div>
+            <h1>New Borrow</h1>
+            <p>Create a new book borrowing record.</p>
+        </div>
+
+        <a asp-page="Index" class="secondary-btn">
+            ← Back to Borrows
+        </a>
+    </div>
+
+    <div class="form-card">
+
+        <div class="form-header">
+            <h1>Borrow Information</h1>
+            <p>Enter the details of the new borrowing record.</p>
+        </div>
+
+        <form method="post">
+
+            <div asp-validation-summary="ModelOnly"
+                 class="validation-summary">
+            </div>
+
+            <div class="form-group">
+
+                <label asp-for="Borrow.BookID">
+                    Book
+                </label>
+
+                <select asp-for="Borrow.BookID"
+                        class="custom-input">
+
+                    <option value="0">
+                        Select a book...
+                    </option>
+
+                    @foreach (var book in Model.Books)
+                    {
+                        <option value="@book.BookID">
+                            @book.Title
+                        </option>
+                    }
+
+                </select>
+
+                <span asp-validation-for="Borrow.BookID"
+                      class="validation-message">
+                </span>
+
+            </div>
+
+            <div class="form-group">
+
+                <label asp-for="Borrow.MemberID">
+                    Member
+                </label>
+
+                <select asp-for="Borrow.MemberID"
+                        class="custom-input">
+
+                    <option value="0">
+                        Select a member...
+                    </option>
+
+                    @foreach (var member in Model.Members)
+                    {
+                        <option value="@member.UserID">
+                            @member.Name
+                        </option>
+                    }
+
+                </select>
+
+                <span asp-validation-for="Borrow.MemberID"
+                      class="validation-message">
+                </span>
+
+            </div>
+
+            <div class="form-group">
+
+                <label asp-for="Borrow.LibrarianID">
+                    Librarian
+                </label>
+
+                <select asp-for="Borrow.LibrarianID"
+                        class="custom-input">
+
+                    <option value="0">
+                        Select a librarian...
+                    </option>
+
+                    @foreach (var librarian in Model.Librarians)
+                    {
+                        <option value="@librarian.UserID">
+                            @librarian.Name
+                        </option>
+                    }
+
+                </select>
+
+                <span asp-validation-for="Borrow.LibrarianID"
+                      class="validation-message">
+                </span>
+
+            </div>
+
+            <div class="form-row">
+
+                <div class="form-group">
+
+                    <label asp-for="Borrow.BorrowDate">
+                        Borrow Date
+                    </label>
+
+                    <input asp-for="Borrow.BorrowDate"
+                           type="date"
+                           class="custom-input" />
+
+                    <span asp-validation-for="Borrow.BorrowDate"
+                          class="validation-message">
+                    </span>
+
+                </div>
+
+                <div class="form-group">
+
+                    <label asp-for="Borrow.DueDate">
+                        Due Date
+                    </label>
+
+                    <input asp-for="Borrow.DueDate"
+                           type="date"
+                           class="custom-input" />
+
+                    <span asp-validation-for="Borrow.DueDate"
+                          class="validation-message">
+                    </span>
+
+                </div>
+
+            </div>
+
+            <input asp-for="Borrow.Status"
+                   type="hidden"
+                   value="Borrowed" />
+
+            <div class="form-actions">
+
+                <a asp-page="Index"
+                   class="secondary-btn">
+                    Cancel
+                </a>
+
+                <button type="submit"
+                        class="primary-action-btn">
+                    Create Borrow
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

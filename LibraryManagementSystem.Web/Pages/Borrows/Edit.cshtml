@@ -1,0 +1,90 @@
+﻿@page "{id:int}"
+@model LibraryManagementSystem.Web.Pages.Borrows.EditModel
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/books.css" />
+}
+
+<div class="form-page">
+
+    <div class="page-header">
+        <div>
+            <h1>Edit Borrow</h1>
+            <p>Update the borrowing record information.</p>
+        </div>
+
+        <a asp-page="Details"
+           asp-route-id="@Model.BorrowID"
+           class="secondary-btn">
+            ← Back to Details
+        </a>
+    </div>
+
+    <div class="form-card">
+
+        <div class="form-header">
+            <h1>Borrow Information</h1>
+            <p>Update the due date, return date, or status.</p>
+        </div>
+
+        <form method="post">
+
+            <div asp-validation-summary="ModelOnly"
+                 class="validation-summary">
+            </div>
+
+            <div class="form-group">
+
+                <label>
+                    Borrow ID
+                </label>
+
+                <input value="@Model.BorrowID"
+                       class="custom-input"
+                       readonly />
+
+            </div>
+
+            <div class="form-group">
+
+                <label asp-for="Borrow.DueDate">
+                    Due Date
+                </label>
+
+                <input asp-for="Borrow.DueDate"
+                       type="date"
+                       class="custom-input" />
+
+                <span asp-validation-for="Borrow.DueDate"
+                      class="validation-message">
+                </span>
+
+            </div>
+
+            
+
+
+            <div class="form-actions">
+
+                <a asp-page="Details"
+                   asp-route-id="@Model.BorrowID"
+                   class="secondary-btn">
+                    Cancel
+                </a>
+
+                <button type="submit"
+                        class="primary-action-btn">
+                    Save Changes
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

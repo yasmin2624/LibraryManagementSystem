@@ -1,0 +1,122 @@
+﻿@page "{id:int}"
+@model LibraryManagementSystem.Web.Pages.Users.DetailsModel
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/books.css" />
+}
+
+<div class="details-page">
+    <div asp-validation-summary="ModelOnly"
+     class="validation-summary">
+</div>
+    <div class="details-card">
+
+        <div class="details-header">
+
+            <div>
+                <span class="details-label">
+                    USER
+                </span>
+
+                <h1>@Model.User!.Name</h1>
+
+                <p>
+                    User account information.
+                </p>
+            </div>
+
+            @if (Model.User.IsActive)
+            {
+                <span class="status available">
+                    Active
+                </span>
+            }
+            else
+            {
+                <span class="status borrowed">
+                    Inactive
+                </span>
+            }
+
+        </div>
+
+        <div class="details-body">
+
+            <div class="detail-item">
+                <span>User ID</span>
+                <strong>#@Model.User.UserID</strong>
+            </div>
+
+            <div class="detail-item">
+                <span>Name</span>
+                <strong>@Model.User.Name</strong>
+            </div>
+
+            <div class="detail-item">
+                <span>Email</span>
+                <strong>@Model.User.Email</strong>
+            </div>
+
+            <div class="detail-item">
+                <span>Role</span>
+                <strong>
+                    @(Model.User.RoleID == 1
+                                        ? "Admin"
+                                        : Model.User.RoleID == 2
+                                        ? "Member"
+                                        : Model.User.RoleID == 3
+                                        ? "Librarian"
+                                        : "Unknown")
+                </strong>
+            </div>
+
+            <div class="detail-item">
+                <span>Phone</span>
+                <strong>
+                    @(string.IsNullOrWhiteSpace(Model.User.PhoneNumber)
+                                        ? "Not provided"
+                                        : Model.User.PhoneNumber)
+                </strong>
+            </div>
+
+           
+
+            <div class="detail-item">
+                <span>Created At</span>
+                <strong>
+                    @Model.User.CreatedAt.ToString("dd MMM yyyy")
+                </strong>
+            </div>
+
+        </div>
+        <div class="details-footer">
+
+            <a asp-page="Index"
+               class="secondary-btn">
+                ← Back to Users
+            </a>
+
+            <a asp-page="Edit"
+               asp-route-id="@Model.User.UserID"
+               class="edit-btn">
+                Edit
+            </a>
+
+            <form method="post"
+                  asp-page-handler="Delete"
+                  asp-route-id="@Model.User.UserID"
+                  style="display:inline;">
+
+                <button type="submit"
+                        class="delete-btn"
+                        onclick="return confirm('Are you sure you want to delete this user?');">
+                    Delete
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>

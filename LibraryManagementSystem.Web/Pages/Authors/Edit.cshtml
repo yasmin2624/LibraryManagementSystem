@@ -1,0 +1,81 @@
+﻿@page
+@model LibraryManagementSystem.Web.Pages.Authors.EditModel
+
+<div class="form-page">
+
+    <div class="form-card">
+
+        <div class="form-header">
+            <h1>Edit Author</h1>
+            <p>Update the author information.</p>
+        </div>
+
+        <form method="post">
+
+            <div asp-validation-summary="ModelOnly"
+                 class="validation-summary"></div>
+
+            <input type="hidden"
+                   asp-for="Author.AuthorID" />
+
+            <div class="form-group">
+
+                <label asp-for="Author.Name"></label>
+
+                <input asp-for="Author.Name"
+                       class="custom-input"
+                       placeholder="Enter author name" />
+
+                <span asp-validation-for="Author.Name"
+                      class="validation-message">
+                </span>
+
+            </div>
+
+            <div class="form-group">
+
+                <label asp-for="Author.Email"></label>
+
+                <input asp-for="Author.Email"
+                       class="custom-input"
+                       placeholder="Enter author email" />
+
+                <span asp-validation-for="Author.Email"
+                      class="validation-message">
+                </span>
+
+            </div>
+
+            <div class="form-group">
+
+                <label asp-for="Author.Nationality"></label>
+
+                <input asp-for="Author.Nationality"
+                       class="custom-input"
+                       placeholder="Enter nationality" />
+
+                <span asp-validation-for="Author.Nationality"
+                      class="validation-message">
+                </span>
+
+            </div>
+
+            <div class="form-actions">
+
+                <a asp-page="Index"
+                   class="secondary-btn">
+                    Cancel
+                </a>
+
+                <button type="submit"
+                        class="primary-action-btn">
+                    Update Author
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>

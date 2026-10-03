@@ -1,0 +1,202 @@
+﻿@page
+@model LibraryManagementSystem.Web.Pages.Borrows.IndexModel
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/books.css" />
+}
+
+<div class="books-page">
+
+    <div class="page-header">
+        <div>
+            <h1>Borrowing Records</h1>
+            <p>View and manage all book borrowing records.</p>
+        </div>
+
+        <a asp-page="Create" class="primary-btn">
+            + New Borrow
+        </a>
+    </div>
+    <div class="books-filters">
+
+        <form method="get" class="filters-form">
+
+            <div class="filter-group">
+                <label for="BookID">Book ID</label>
+
+                <input type="number"
+                       id="BookID"
+                       name="BookID"
+                       value="@Model.BookID"
+                       min="1"
+                       placeholder="Enter book ID..." />
+            </div>
+
+            <div class="filter-group">
+                <label for="MemberID">Member ID</label>
+
+                <input type="number"
+                       id="MemberID"
+                       name="MemberID"
+                       value="@Model.MemberID"
+                       min="1"
+                       placeholder="Enter member ID..." />
+            </div>
+
+            <div class="filter-group">
+                <label for="Status">Status</label>
+
+                <select id="Status" name="Status">
+
+                    <option value="">All Statuses</option>
+
+                    <option value="Borrowed"
+                            selected="@(Model.Status == "Borrowed" ? "selected" : null)">
+                        Borrowed
+                    </option>
+
+                    <option value="Returned"
+                            selected="@(Model.Status == "Returned" ? "selected" : null)">
+                        Returned
+                    </option>
+
+                </select>
+            </div>
+
+            <div class="filter-actions">
+
+                <button type="submit" class="primary-btn">
+                    Search
+                </button>
+
+                <a asp-page="Index" class="secondary-btn">
+                    Clear
+                </a>
+
+            </div>
+
+        </form>
+
+    </div>
+
+    @if (!Model.Borrows.Any())
+    {
+        <div class="empty-state">
+            <h2>No borrowing records found</h2>
+            <p>
+                There are currently no borrowing records in the library.
+            </p>
+        </div>
+    }
+    else
+    {
+        <div class="entity-grid">
+
+            @foreach (var borrow in Model.Borrows)
+            {
+                <div class="entity-card">
+
+                    <div class="entity-card-header">
+
+                        <span class="entity-id">
+                            #@borrow.BorrowID
+                        </span>
+
+                        @if (borrow.Status == "Returned")
+                        {
+                            <span class="status available">
+                                Returned
+                            </span>
+                        }
+                        else
+                        {
+                            <span class="status borrowed">
+                                @borrow.Status
+                            </span>
+                        }
+
+                </div>
+
+                <div class="entity-card-body">
+
+                    <h2>
+                        Book #@borrow.BookID
+                    </h2>
+
+                    <p class="isbn">
+                        Member #@borrow.MemberID
+                    </p>
+
+                    <div class="entity-info">
+
+                        <div>
+                            <span class="info-label">
+                                Librarian
+                            </span>
+
+                            <span>
+                                #@borrow.LibrarianID
+                            </span>
+                        </div>
+
+                        <div>
+                            <span class="info-label">
+                                Borrow Date
+                            </span>
+
+                            <span>
+                                @borrow.BorrowDate.ToString("dd MMM yyyy")
+                            </span>
+                        </div>
+
+                        <div>
+                            <span class="info-label">
+                                Due Date
+                            </span>
+
+                            <span>
+                                @borrow.DueDate.ToString("dd MMM yyyy")
+                            </span>
+                        </div>
+
+                        <div>
+                            <span class="info-label">
+                                Return Date
+                            </span>
+
+                            <span>
+                                @(borrow.ReturnDate.HasValue
+                                                            ? borrow.ReturnDate.Value.ToString("dd MMM yyyy")
+                                                            : "Not returned")
+                        </span>
+                    </div>
+
+                        </div>
+
+                    </div>
+
+                    <div class="entity-card-footer">
+
+                        <a asp-page="Details"
+                           asp-route-id="@borrow.BorrowID"
+                           class="details-btn">
+                            Details
+                        </a>
+
+                @if (borrow.Status != "Returned")
+                        {
+                            <a asp-page="Edit"
+                               asp-route-id="@borrow.BorrowID"
+                               class="edit-btn">
+                                Edit
+                            </a>
+                        }
+
+                    </div>
+
+                </div>
+            }
+
+        </div>
+    }
+</div>

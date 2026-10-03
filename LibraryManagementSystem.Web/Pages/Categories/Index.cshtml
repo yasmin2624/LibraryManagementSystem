@@ -1,0 +1,108 @@
+﻿@page
+@model LibraryManagementSystem.Web.Pages.Categories.IndexModel
+
+@{
+    ViewData["Title"] = "Categories";
+}
+
+<link rel="stylesheet" href="~/css/books.css" />
+
+<div class="page-header">
+    <div>
+        <h1>Categories</h1>
+        <p>Manage book categories.</p>
+    </div>
+
+    <a asp-page="Create" class="primary-btn">
+        + Add Category
+    </a>
+</div>
+
+<div class="books-filters">
+    <form method="get" class="filters-form">
+
+        <div class="filter-group search-group">
+            <label for="Search">Search</label>
+
+            <input type="text"
+                   id="Search"
+                   name="Search"
+                   value="@Model.Search"
+                   placeholder="Search by category name..." />
+        </div>
+
+        <div class="filter-actions">
+            <button type="submit" class="primary-btn">
+                Search
+            </button>
+
+            <a asp-page="Index" class="secondary-btn">
+                Clear
+            </a>
+        </div>
+
+    </form>
+</div>
+
+@if (Model.Categories.Any())
+{
+    <div class="entity-grid">
+
+        @foreach (var category in Model.Categories)
+        {
+            <div class="entity-card">
+
+                <div class="entity-card-header">
+                    <span class="entity-id">
+                        ID: @category.CategoryID
+                    </span>
+                </div>
+
+                <div class="entity-card-body">
+
+                    <div class="entity-info">
+                        <span class="info-label">Name</span>
+                        <strong>@category.Name</strong>
+                    </div>
+
+                    <div class="entity-info">
+                        <span class="info-label">Description</span>
+                        <span>
+                            @(string.IsNullOrWhiteSpace(category.Description)
+                                                ? "No description"
+                                                : category.Description)
+                </span>
+            </div>
+
+                </div>
+
+                <div class="entity-card-footer">
+                    <a asp-page="Details"
+                       asp-route-id="@category.CategoryID"
+                       class="details-btn">
+                        Details
+                    </a>
+
+                    <a asp-page="Edit"
+                       asp-route-id="@category.CategoryID"
+                       class="edit-btn">
+                        Edit
+                    </a>
+                </div>
+
+            </div>
+        }
+
+    </div>
+}
+else
+{
+    <div class="empty-state">
+        <h3>No categories found</h3>
+        <p>
+            @(string.IsNullOrWhiteSpace(Model.Search)
+                    ? "There are no categories yet."
+                    : "No categories match your search.")
+    </p>
+</div>
+}

@@ -1,0 +1,112 @@
+﻿@page
+@model LibraryManagementSystem.Web.Pages.Users.CreateModel
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/books.css" />
+}
+
+<div class="form-page">
+
+    <div class="page-header">
+        <div>
+            <h1>New User</h1>
+            <p>Create a new library user.</p>
+        </div>
+
+        <a asp-page="Index" class="secondary-btn">
+            ← Back to Users
+        </a>
+    </div>
+
+    <div class="form-card">
+
+        <div class="form-header">
+            <h1>User Information</h1>
+            <p>Enter the details of the new user.</p>
+        </div>
+
+        <form method="post">
+
+            <div asp-validation-summary="ModelOnly"
+                 class="validation-summary">
+            </div>
+
+            <div class="form-group">
+                <label asp-for="User.Name">Name</label>
+                <input asp-for="User.Name"
+                       class="custom-input"
+                       placeholder="Enter name..." />
+                <span asp-validation-for="User.Name"
+                      class="validation-message"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="User.Email">Email</label>
+                <input asp-for="User.Email"
+                       class="custom-input"
+                       placeholder="Enter email..." />
+                <span asp-validation-for="User.Email"
+                      class="validation-message"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="User.Password">Password</label>
+                <input asp-for="User.Password"
+                       class="custom-input"
+                       placeholder="Enter password..." />
+                <span asp-validation-for="User.Password"
+                      class="validation-message"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="User.RoleID">Role</label>
+
+                <select asp-for="User.RoleID"
+                        class="custom-input">
+
+                    <option value="1">Admin</option>
+                    <option value="2">Member</option>
+                    <option value="3">Librarian</option>
+
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="User.PhoneNumber">Phone Number</label>
+                <input asp-for="User.PhoneNumber"
+                       class="custom-input"
+                       placeholder="Enter phone number..." />
+            </div>
+
+            <div class="form-group">
+                <label>
+                    <input asp-for="User.IsActive" />
+                    Active
+                </label>
+            </div>
+
+          
+
+            <div class="form-actions">
+
+                <a asp-page="Index"
+                   class="secondary-btn">
+                    Cancel
+                </a>
+
+                <button type="submit"
+                        class="primary-action-btn">
+                    Create User
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

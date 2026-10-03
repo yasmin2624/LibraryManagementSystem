@@ -1,0 +1,181 @@
+﻿@page
+@model LibraryManagementSystem.Web.Pages.Books.IndexModel
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/books.css" />
+}
+
+<div class="books-page">
+
+    <div class="page-header">
+        <div>
+            <h1>Library Books</h1>
+            <p>Browse and manage all books in the library.</p>
+        </div>
+
+        <a asp-page="Create" class="primary-btn">
+            + Add New Book
+        </a>
+    </div>
+    <div class="books-filters">
+
+        <form method="get" class="filters-form">
+
+            <div class="filter-group search-group">
+                <label for="Search">Search by title</label>
+
+                <input type="text"
+                       id="Search"
+                       name="Search"
+                       value="@Model.Search"
+                       placeholder="Enter book title..." />
+            </div>
+
+            <div class="filter-group">
+                <label for="AuthorID">Author</label>
+
+                <select id="AuthorID" name="AuthorID">
+                    <option value="">All Authors</option>
+
+                    @foreach (var author in Model.Authors)
+                    {
+                        <option value="@author.AuthorID"
+                                selected="@(Model.AuthorID == author.AuthorID ? "selected" : null)">
+                            @author.Name
+                        </option>
+                    }
+                </select>
+            </div>
+
+            <div class="filter-group">
+                <label for="CategoryID">Category</label>
+
+                <select id="CategoryID" name="CategoryID">
+                    <option value="">All Categories</option>
+
+                    @foreach (var category in Model.Categories)
+                    {
+                        <option value="@category.CategoryID"
+                                selected="@(Model.CategoryID == category.CategoryID ? "selected" : null)">
+                            @category.Name
+                        </option>
+                    }
+                </select>
+            </div>
+
+            <div class="filter-actions">
+
+                <button type="submit" class="primary-btn">
+                    Search
+                </button>
+
+                <a asp-page="Index" class="secondary-btn">
+                    Clear
+                </a>
+
+            </div>
+
+        </form>
+
+    </div>
+
+    @if (!Model.Books.Any())
+    {
+        <div class="empty-state">
+            <h2>No books found</h2>
+
+            <p>
+                There are currently no books in the library.
+            </p>
+
+            <a asp-page="Create" class="primary-btn">
+                Add Your First Book
+            </a>
+        </div>
+    }
+    else
+    {
+        <div class="entity-grid">
+
+            @foreach (var book in Model.Books)
+            {
+                <div class="entity-card">
+
+                    <div class="entity-card-header">
+
+                        <span class="entity-id">
+                            #@book.BookID
+                        </span>
+
+                        @if (book.Availability)
+                        {
+                            <span class="status available">
+                                Available
+                            </span>
+                        }
+                        else
+                        {
+                            <span class="status borrowed">
+                                Borrowed
+                            </span>
+                        }
+
+                    </div>
+
+                    <div class="entity-card-body">
+
+                        <h2>@book.Title</h2>
+
+                        <p class="isbn">
+                            ISBN: @book.ISBN
+                        </p>
+
+                        <div class="entity-info">
+
+                            <div>
+                                <span class="info-label">
+                                    Genre
+                                </span>
+
+                                <span>
+                                    @(book.Genre ?? "Not specified")
+                                </span>
+                            </div>
+
+                            <div>
+                                <span class="info-label">
+                                    Language
+                                </span>
+
+                                <span>
+                                    @(book.Language ?? "Not specified")
+                                </span>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <div class="entity-card-footer">
+
+                        <a asp-page="Details"
+                           asp-route-id="@book.BookID"
+                           class="details-btn">
+                            Details
+                        </a>
+
+                        <a asp-page="Edit"
+                           asp-route-id="@book.BookID"
+                           class="edit-btn">
+                            Edit
+                        </a>
+
+                    </div>
+
+                </div>
+            }
+
+        </div>
+    }
+
+</div>

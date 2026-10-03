@@ -1,0 +1,18 @@
+﻿/* ================================
+   AUTHORS
+   ================================ */
+
+.authors-page {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+
+/* Author-specific information */
+
+.author-nationality {
+    color: #6b7280;
+    font-size: 14px;
+    margin-bottom: 25px;
+}

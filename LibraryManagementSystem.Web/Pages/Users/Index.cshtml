@@ -1,0 +1,256 @@
+﻿@page
+@model LibraryManagementSystem.Web.Pages.Users.IndexModel
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/books.css" />
+}
+
+<div class="books-page">
+
+    <div class="page-header">
+
+        <div>
+            <h1>Users</h1>
+            <p>View and manage all library users.</p>
+        </div>
+
+        <a asp-page="Create" class="primary-btn">
+            + New User
+        </a>
+
+    </div>
+    <div class="books-filters">
+
+        <form method="get" class="filters-form">
+
+            <div class="filter-group search-group">
+                <label for="Search">Search</label>
+
+                <input type="text"
+                       id="Search"
+                       name="Search"
+                       value="@Model.Search"
+                       placeholder="Search by name or email..." />
+            </div>
+
+            <div class="filter-group">
+                <label for="RoleID">Role</label>
+
+                <select id="RoleID"
+                        name="RoleID">
+
+                    <option value="">All Roles</option>
+
+                    @if (Model.RoleID == 1)
+                    {
+                        <option value="1" selected>Admin</option>
+                    }
+                    else
+                    {
+                        <option value="1">Admin</option>
+                    }
+
+                    @if (Model.RoleID == 2)
+                    {
+                        <option value="2" selected>Member</option>
+                    }
+                    else
+                    {
+                        <option value="2">Member</option>
+                    }
+
+                    @if (Model.RoleID == 3)
+                    {
+                        <option value="3" selected>Librarian</option>
+                    }
+                    else
+                    {
+                        <option value="3">Librarian</option>
+                    }
+
+                </select>
+            </div>
+
+            <div class="filter-group">
+                <label for="IsActive">Status</label>
+
+                <select id="IsActive"
+                        name="IsActive">
+
+                    <option value="">All Status</option>
+
+                    @if (Model.IsActive == true)
+                    {
+                        <option value="true" selected>Active</option>
+                    }
+                    else
+                    {
+                        <option value="true">Active</option>
+                    }
+
+                    @if (Model.IsActive == false && Model.IsActive.HasValue)
+                    {
+                        <option value="false" selected>Inactive</option>
+                    }
+                    else
+                    {
+                        <option value="false">Inactive</option>
+                    }
+
+                </select>
+            </div>
+
+            <div class="filter-actions">
+
+                <button type="submit" class="primary-btn">
+                    Search
+                </button>
+
+                <a asp-page="Index" class="secondary-btn">
+                    Clear
+                </a>
+
+            </div>
+
+        </form>
+
+    </div>
+    @if (!Model.Users.Any())
+    {
+        <div class="empty-state">
+
+            <h2>No users found</h2>
+
+            <p>
+                There are currently no users in the library.
+            </p>
+
+        </div>
+    }
+    else
+    {
+        <div class="entity-grid">
+
+            @foreach (var user in Model.Users)
+            {
+                <div class="entity-card">
+
+                    <div class="entity-card-header">
+
+                        <span class="entity-id">
+                            #@user.UserID
+                        </span>
+
+                        @if (user.IsActive)
+                        {
+                            <span class="status available">
+                                Active
+                            </span>
+                        }
+                        else
+                        {
+                            <span class="status borrowed">
+                                Inactive
+                            </span>
+                        }
+
+                    </div>
+
+                    <div class="entity-card-body">
+
+                        <h2>
+                            @user.Name
+                        </h2>
+
+                        <p class="isbn">
+                            
+                        </p>
+
+                        <div class="entity-info">
+
+                            <div>
+                                <span class="info-label">
+                                    Role
+                                </span>
+
+                                <span>
+                                    @switch (user.RoleID)
+                                    {
+                                        case 1:
+                                            @:Admin
+                                            break;
+
+                                        case 2:
+                                            @:Member
+                                            break;
+
+                                        case 3:
+                                            @:Librarian
+                                            break;
+
+                                        default:
+                                            @:Unknown
+                                            break;
+                                    }
+                            </span>
+                        </div>
+
+                        <div>
+                            <span class="info-label">
+                                Phone
+                            </span>
+
+                            <span>
+                                @(string.IsNullOrWhiteSpace(user.PhoneNumber)
+                                                            ? "Not provided"
+                                                            : user.PhoneNumber)
+                                                                           </span>
+                                                                       </div>
+
+                        <div>
+                            <span class="info-label">
+                                Email
+                            </span>
+
+                            <span>
+                                @(user.Email)
+                        </span>
+                    </div>
+
+                            <div>
+                                <span class="info-label">
+                                    Created
+                                </span>
+
+                                <span>
+                                    @user.CreatedAt.ToString("dd MMM yyyy")
+                                </span>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <div class="entity-card-footer">
+
+                        <a asp-page="Details"
+                           asp-route-id="@user.UserID"
+                           class="details-btn">
+                            Details
+                        </a>
+
+                        <a asp-page="Edit"
+                           asp-route-id="@user.UserID"
+                           class="edit-btn">
+                            Edit
+                        </a>
+
+                    </div>
+
+                </div>
+                }
+
+        </div>
+    }
+
+</div>
