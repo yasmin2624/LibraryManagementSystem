@@ -155,19 +155,29 @@
                    type="hidden"
                    value="Borrowed" />
 
-            <div class="form-actions">
 
-                <a asp-page="Index"
-                   class="secondary-btn">
-                    Cancel
-                </a>
+                <div class="form-actions">
 
-                <button type="submit"
-                        class="primary-action-btn">
-                    Create Borrow
-                </button>
+                    <a asp-page="Index" class="secondary-btn">
+                        Cancel
+                    </a>
 
-            </div>
+                    <button type="submit"
+                            name="action"
+                            value="save"
+                            class="secondary-btn">
+                        Save Borrow Only
+                    </button>
+
+                    <button type="submit"
+                            name="action"
+                            value="payment"
+                            class="primary-action-btn">
+                        Save & Continue to Payment
+                    </button>
+
+                </div>
+            
 
         </form>
 

@@ -98,5 +98,16 @@ namespace LibraryManagementSystem.Web.Services
 
             return response.IsSuccessStatusCode;
         }
+        public async Task<TResponse?> PostAndGetAsync<TRequest, TResponse>(
+    string endpoint,
+    TRequest data)
+        {
+            var response = await _httpClient.PostAsJsonAsync(endpoint, data);
+
+            if (!response.IsSuccessStatusCode)
+                return default;
+
+            return await response.Content.ReadFromJsonAsync<TResponse>();
+        }
     }
 }

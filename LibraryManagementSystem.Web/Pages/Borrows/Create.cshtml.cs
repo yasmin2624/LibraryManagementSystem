@@ -30,7 +30,7 @@ namespace LibraryManagementSystem.Web.Pages.Borrows
             await LoadDataAsync();
         }
 
-        public async Task<IActionResult> OnPostAsync()
+        public async Task<IActionResult> OnPostAsync(string action)
         {
             if (!ModelState.IsValid)
             {
@@ -38,11 +38,12 @@ namespace LibraryManagementSystem.Web.Pages.Borrows
                 return Page();
             }
 
-            var success = await _apiService.PostAsync(
-                "api/Borrows",
-                Borrow);
+            var createdBorrow =
+                await _apiService.PostAndGetAsync<CreateBorrowDto, BorrowDto>(
+                    "api/Borrows",
+                    Borrow);
 
-            if (!success)
+            if (createdBorrow == null)
             {
                 ModelState.AddModelError(
                     string.Empty,
@@ -52,7 +53,14 @@ namespace LibraryManagementSystem.Web.Pages.Borrows
                 return Page();
             }
 
-            return RedirectToPage("Index");
+            if (action == "payment")
+            {
+                return RedirectToPage(
+                    "/Payments/Create",
+                    new { borrowId = createdBorrow.BorrowID });
+            }
+
+            return RedirectToPage("Details", new { id = createdBorrow.BorrowID });
         }
 
         private async Task LoadDataAsync()
@@ -67,6 +75,7 @@ namespace LibraryManagementSystem.Web.Pages.Borrows
                 .Where(b => b.Availability)
                 .ToList()
                 ?? new();
+
             Members = users?
                 .Where(u => u.RoleID == 2)
                 .ToList()

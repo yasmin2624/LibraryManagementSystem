@@ -1,10 +1,8 @@
-
-using LibraryManagementSystem.Web.Models;
+using LibraryManagementSystem.Web.Models.Borrows;
+using LibraryManagementSystem.Web.Models.Payment;
 using LibraryManagementSystem.Web.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using LibraryManagementSystem.Web.Models.Payment;
-using LibraryManagementSystem.Web.Models.Borrows;
 
 namespace LibraryManagementSystem.Web.Pages.Payments
 {
@@ -22,11 +20,24 @@ namespace LibraryManagementSystem.Web.Pages.Payments
 
         public List<BorrowDto> Borrows { get; set; } = new();
 
-        public async Task OnGetAsync()
+        public async Task<IActionResult> OnGetAsync(int? borrowId)
         {
             await LoadBorrowsAsync();
 
             Payment.PaymentDate = DateTime.Now;
+
+            if (borrowId.HasValue)
+            {
+                var borrow = Borrows.FirstOrDefault(
+                    b => b.BorrowID == borrowId.Value);
+
+                if (borrow == null)
+                    return NotFound();
+
+                Payment.BorrowID = borrowId.Value;
+            }
+
+            return Page();
         }
 
         public async Task<IActionResult> OnPostAsync()
@@ -51,17 +62,9 @@ namespace LibraryManagementSystem.Web.Pages.Payments
                 return Page();
             }
 
-            if (!success)
-            {
-                ModelState.AddModelError(
-                    string.Empty,
-                    "Unable to record the payment.");
-
-                await LoadBorrowsAsync();
-                return Page();
-            }
-
-            return RedirectToPage("Index");
+            return RedirectToPage(
+                "/Borrows/Details",
+                new { id = Payment.BorrowID });
         }
 
         private async Task LoadBorrowsAsync()
